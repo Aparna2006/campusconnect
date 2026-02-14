@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import API from "../services/api";
@@ -24,7 +24,7 @@ function Dashboard() {
     { id: 2, text: "Club meetup tomorrow at 5 PM" },
   ]);
 
-  const calculateMatch = (ops) => {
+  const calculateMatch = useCallback((ops) => {
     if (!ops.length || !skills.length) return 20;
 
     let matched = 0;
@@ -35,7 +35,7 @@ function Dashboard() {
 
     const rawScore = Math.round((matched / ops.length) * 100);
     return Math.min(40, Math.max(20, rawScore));
-  };
+  }, [skills]);
 
   useEffect(() => {
     const fetchOpportunities = async () => {
