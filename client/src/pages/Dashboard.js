@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React , { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import API from "../services/api";
@@ -38,7 +38,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    const fetchOpportunities = async () => {
+    const fetchOpportunities = useCallback(async () => {
       try {
         const res = await API.get("/opportunities");
         setOpportunities(res.data);
@@ -46,10 +46,11 @@ function Dashboard() {
       } catch (err) {
         console.error("Failed to load opportunities");
       }
-    };
+    }, []);
 
-    fetchOpportunities();
-  }, [skills]);
+    useEffect(() => {
+      fetchOpportunities();
+  }, [fetchOpportunities]);
 
   const addSkill = async () => {
     if (!newSkill.trim()) return;
