@@ -1,4 +1,4 @@
-🚀CAMPUSCONNECT
+🚀**CAMPUSCONNECT**
 
 
 CampusConnect is a full-stack web platform built to centralize campus opportunities including events, clubs, hackathons, internships, and jobs into a single modern dashboard for students.
@@ -39,24 +39,27 @@ https://campusconnect-rust.vercel.app/
 💠Version Control → GitHub
 
 📂 Project Structure (Monorepo)
+```bash
 campusconnect/
 │
-├── client/      # React Frontend
+├── client/
 │   ├── src/
 │   ├── public/
 │   └── package.json
 │
-├── server/      # Express Backend
+├── server/
 │   ├── routes/
 │   ├── models/
 │   ├── controllers/
-│   ├── middleware/
 │   └── server.js
 │
 └── README.md
+```
+
 
 
 🚀 Running Locally
+
 1️⃣ Clone Repository
 git clone https://github.com/Aparna2006/campusconnect.git
 cd campusconnect
