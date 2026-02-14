@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://campusconnect-83am.onrender.com",
+  baseURL: process.env.REACT_APP_API_URL + "/api",
 });
 
 API.interceptors.request.use((req) => {
