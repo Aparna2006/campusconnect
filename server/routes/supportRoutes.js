@@ -6,6 +6,17 @@ router.post("/", async (req, res) => {
   const { name, email, category, issue } = req.body;
 
   try {
+    if (!name || !email || !category || !issue) {
+      return res.status(400).json({ success: false, message: "All fields are required." });
+    }
+
+    if (!process.env.SUPPORT_EMAIL || !process.env.SUPPORT_PASSWORD) {
+      return res.status(500).json({
+        success: false,
+        message: "Support email is not configured on server.",
+      });
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -15,7 +26,8 @@ router.post("/", async (req, res) => {
     });
 
     const mailOptions = {
-      from: email,
+      from: process.env.SUPPORT_EMAIL,
+      replyTo: email,
       to: process.env.SUPPORT_EMAIL,
       subject: `Support Request - ${category}`,
       text: `
@@ -32,8 +44,11 @@ router.post("/", async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false });
+    console.error("Support email error:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Unable to send support request email. Check support email credentials.",
+    });
   }
 });
 

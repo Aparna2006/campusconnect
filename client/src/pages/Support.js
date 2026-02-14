@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-import axios from "axios";
+import API from "../services/api";
 
 function Support() {
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     email: "",
     category: "",
     issue: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,6 +22,7 @@ function Support() {
   const handleCardClick = (type) => {
     if (type === "guidance") {
       navigate("/ai-helper");
+      return;
     }
 
     if (type === "bug") {
@@ -33,6 +33,7 @@ function Support() {
           "Please describe:\n1. What were you doing?\n2. What went wrong?\n3. Screenshot (if any)\n",
       });
       window.scrollTo({ top: 500, behavior: "smooth" });
+      return;
     }
 
     if (type === "contact") {
@@ -45,84 +46,61 @@ function Support() {
     e.preventDefault();
     setLoading(true);
     setSuccess("");
+    setError("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/support",
-        form
-      );
-
-      if (res.data.success) {
-        setSuccess("Your request has been submitted successfully ✅");
+      const res = await API.post("/support", form);
+      if (res.data?.success) {
+        setSuccess("Your request has been submitted successfully.");
         setForm({ name: "", email: "", category: "", issue: "" });
+      } else {
+        setError("Support request failed. Please try again.");
       }
-    } catch (error) {
-      setSuccess("Something went wrong ❌ Please try again.");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <Layout>
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          Support Center
-        </h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">Support Center</h1>
 
-        {/* Quick Action Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {/* Contact */}
           <div
             onClick={() => handleCardClick("contact")}
             className="bg-white shadow-lg rounded-xl p-6 cursor-pointer hover:shadow-2xl transition"
           >
-            <h2 className="text-lg font-semibold mb-2">
-              📩 Contact Support
-            </h2>
-            <p className="text-gray-600 text-sm">
-              Reach out for technical help or account issues.
-            </p>
+            <h2 className="text-lg font-semibold mb-2">Contact Support</h2>
+            <p className="text-gray-600 text-sm">Reach out for technical help or account issues.</p>
           </div>
 
-          {/* Bug */}
           <div
             onClick={() => handleCardClick("bug")}
             className="bg-white shadow-lg rounded-xl p-6 cursor-pointer hover:shadow-2xl transition"
           >
-            <h2 className="text-lg font-semibold mb-2">
-              🐞 Report a Bug
-            </h2>
-            <p className="text-gray-600 text-sm">
-              Found something broken? Report it instantly.
-            </p>
+            <h2 className="text-lg font-semibold mb-2">Report a Bug</h2>
+            <p className="text-gray-600 text-sm">Found something broken? Report it instantly.</p>
           </div>
 
-          {/* Career */}
           <div
             onClick={() => handleCardClick("guidance")}
             className="bg-white shadow-lg rounded-xl p-6 cursor-pointer hover:shadow-2xl transition"
           >
-            <h2 className="text-lg font-semibold mb-2">
-              🎓 Career Guidance
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Career Guidance</h2>
             <p className="text-gray-600 text-sm">
               Need help with skills or placements? Talk to AI Assistant.
             </p>
           </div>
         </div>
 
-        {/* Support Form */}
         <div className="bg-white shadow-xl rounded-xl p-8">
-          <h2 className="text-xl font-semibold mb-6">
-            Submit a Support Request
-          </h2>
+          <h2 className="text-xl font-semibold mb-6">Submit a Support Request</h2>
 
-          {success && (
-            <div className="mb-4 text-green-600 font-medium">
-              {success}
-            </div>
-          )}
+          {success && <div className="mb-4 text-green-600 font-medium">{success}</div>}
+          {error && <div className="mb-4 text-red-600 font-medium">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <input
