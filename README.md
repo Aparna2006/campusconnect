@@ -1,5 +1,5 @@
-🚀 CampusConnect
-Smart Campus Opportunities Hub
+🚀CAMPUSCONNECT
+
 
 CampusConnect is a full-stack web platform built to centralize campus opportunities including events, clubs, hackathons, internships, and jobs into a single modern dashboard for students.
 
