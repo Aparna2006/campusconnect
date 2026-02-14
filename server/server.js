@@ -14,7 +14,10 @@ const httpServer = http.createServer(app);
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+    origin: [
+    process.env.CLIENT_ORIGIN || "http://localhost:3000",
+    "https://campusconnect-h837-ir4tgf0g9-aparnakl2006-gmailcoms-projects.vercel.app"
+  ],
     credentials: true,
   })
 );
