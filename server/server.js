@@ -11,13 +11,25 @@ dotenv.config();
 const app = express();
 const httpServer = http.createServer(app);
 
+const configuredOrigins = (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const fixedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
+const vercelCampusConnectOrigin = /^https:\/\/campusconnect(?:-[a-z0-9-]+)?\.vercel\.app$/i;
+const allowedOrigins = new Set([...fixedOrigins, ...configuredOrigins]);
+const isAllowedOrigin = (origin) =>
+  allowedOrigins.has(origin) || vercelCampusConnectOrigin.test(origin);
+
 // Middleware
 app.use(
   cors({
-    origin: [
-    process.env.CLIENT_ORIGIN || "http://localhost:3000",
-    "https://campusconnect-h837-ir4tgf0g9-aparnakl2006-gmailcoms-projects.vercel.app"
-  ],
+    origin: (origin, callback) => {
+      if (!origin || isAllowedOrigin(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy blocked this origin"));
+    },
     credentials: true,
   })
 );

@@ -39,7 +39,10 @@ function Register() {
       setTimeout(() => navigate("/dashboard"), 600);
     } catch (err) {
       const serverMessage = err.response?.data?.message;
-      const networkMessage = err.code === "ERR_NETWORK" ? "Server is not reachable. Start backend on port 5000." : null;
+      const networkMessage =
+        err.code === "ERR_NETWORK"
+          ? "Server is not reachable. Check backend deployment, CORS, and REACT_APP_API_URL."
+          : null;
       setError(serverMessage || networkMessage || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
