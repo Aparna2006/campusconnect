@@ -49,7 +49,7 @@ function Dashboard() {
     };
 
     fetchOpportunities();
-  }, [skills]);
+  }, [calculateMatch]);
 
   const addSkill = async () => {
     if (!newSkill.trim()) return;
