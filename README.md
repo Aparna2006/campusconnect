@@ -4,18 +4,25 @@
 CampusConnect is a full-stack web platform built to centralize campus opportunities including events, clubs, hackathons, internships, and jobs into a single modern dashboard for students.
 
 It helps students:
+
   💠Track applications
+  
   💠Discover opportunities
+  
   💠Manage skills
+  
   💠Improve profile match score
+  
   💠Stay updated with campus activities
 
 🌐 Live Demo
+
 🔗 Frontend (Vercel):
 https://campusconnect-rust.vercel.app/
 
 🛠 Tech Stack
 💻 **Frontend**
+
 💠React.js
 💠React Router DOM
 💠Axios
@@ -61,15 +68,18 @@ campusconnect/
 🚀 Running Locally
 
 1️⃣ Clone Repository
+
 git clone https://github.com/Aparna2006/campusconnect.git
 cd campusconnect
 
 2️⃣ Install Client
+
 cd client
 npm install
 npm start
 
 3️⃣ Install Server
+
 cd server
 npm install
 npm run dev
@@ -93,7 +103,9 @@ npm run dev
 👩‍💻 Author
 
 Aparna Kondiparthy❤️
+
 Computer Science Engineering
+
 3nd Year Student
 
 📌 Passionate about Full Stack Development & AI Systems
