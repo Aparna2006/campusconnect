@@ -38,7 +38,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    const fetchOpportunities = useCallback(async () => {
+    const fetchOpportunities = async () => {
       try {
         const res = await API.get("/opportunities");
         setOpportunities(res.data);
@@ -46,11 +46,9 @@ function Dashboard() {
       } catch (err) {
         console.error("Failed to load opportunities");
       }
-    }, [skills]);
+    };
 
-    useEffect(() => {
-      fetchOpportunities();
-    }, [fetchOpportunities]);
+    fetchOpportunities();
   }, [skills]);
 
   const addSkill = async () => {
