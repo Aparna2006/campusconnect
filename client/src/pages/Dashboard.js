@@ -50,7 +50,7 @@ function Dashboard() {
 
     useEffect(() => {
       fetchOpportunities();
-  }, [fetchOpportunities]);
+  }, [fetchOpportunities])}, []);
 
   const addSkill = async () => {
     if (!newSkill.trim()) return;
