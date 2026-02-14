@@ -20,29 +20,45 @@ It helps students:
 🔗 Frontend (Vercel):
 https://campusconnect-rust.vercel.app/
 
+
 🛠 Tech Stack
+
 💻 **Frontend**
 
 💠React.js
+
 💠React Router DOM
+
 💠Axios
+
 💠Tailwind CSS
+
 💠Context API (Authentication)
+
 💠ESLint (CI enforced)
 
 ⚙ **Backend**
+
 💠Node.js
+
 💠Express.js
+
 💠MongoDB
+
 💠Mongoose
+
 💠JWT Authentication
+
 💠CORS Configuration
+
 💠dotenv
 
 🚀 **Deployment**
 
 💠Frontend → Vercel
+
 💠Backend → Render
+
 💠Version Control → GitHub
 
 📂 Project Structure (Monorepo)
